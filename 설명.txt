@@ -1,14 +1,18 @@
-pragma solidity ^0.4.21;
+pragma solidity ^0.4.26;
  
+//계약금 전송 필요 한가?
+//계약서 문서 업로드 가능 여부
+
+
 contract ContractPjt{
- 
+    //계약 관련 구조체 선언
     struct contractList{
-        string name;
-        string doctype;
-        uint age;
-        string date;
-        string zipaddress;
-        bool validity_YN;
+        string name;			//계약자 이름  hskim
+        string doctype;		//계약서 종류  Insurance Certificate
+        uint age;			//나이	       40	
+        string date;			//계약 날짜     20210614
+        string zipaddress;		//주소           02022
+        bool validity_YN;		//계약 여부    true	
         
     }
  
@@ -18,16 +22,18 @@ contract ContractPjt{
     
     event NewContract(address user, string name, string doctype,uint age, string date ,string zipaddress , bool validity_YN);
     
-    
+// 오너가 아니면 수정을 못하게 한다.
     modifier onlyOwner{
         require(msg.sender == Owner);
          _;
     }
-    
+ 	
+//단순 오너 주소 나타내기   
     constructor() public{
         Owner = msg.sender;
     }
-    
+ 
+//입력값을 구조체에 저장 하기   
     function setContract(address _user, string _name, string _doctype,uint _age, string _date ,string _zipaddress , bool _validity_YN) public onlyOwner{
         contractList storage ctrt = ctList[_user];
         ctrt.name = _name;
@@ -39,7 +45,8 @@ contract ContractPjt{
         
         emit NewContract(_user, _name, _doctype, _age, _date, _zipaddress, _validity_YN );
     }
-    
+ 
+//계약서 종류 나타는 함수   
     function getDocType(address _address) public constant returns(string name){
         return ctList[_address].doctype;
     } 
