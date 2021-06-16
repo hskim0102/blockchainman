@@ -69,18 +69,18 @@ contract ContractPjt{
     }
 
     //계약금 송금
-    function payContract(string title) public onlyOwner payable returns(address) {
+    function payContract(string title) public onlyOwner payable returns(uint256) {
         contractList localCt = ctList[title];
         require(localCt.isValid);
         require(localCt.isChecked);
         
-        return address(this);
+        require(Owner.balance >= localCt.deposit);
 
-        //localCt.contractor.transfer(localCt.deposit);
+        localCt.contractor.transfer(localCt.deposit);
     }
     
     //계약서 양도 ( 양도금 송금)
-    function transferContract(address contractor, string title, uint index) public onlyOwner {
-
+    function transferContract(address contractor, string title) public onlyOwner {
+        delete ctList[title];
     }
 }
