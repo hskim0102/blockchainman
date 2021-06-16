@@ -1,5 +1,7 @@
 pragma solidity ^0.4.26;
 
+//분할양도
+//기간 만료
 
 contract ContractPjt{
  
